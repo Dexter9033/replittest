@@ -4,13 +4,17 @@ import logger from "koa-logger";
 import json from "koa-json";
 const app: Koa = new Koa();
 const router: Router = new Router();
-router.get('/', async (ctx: RouterContext, next: any) => {
- ctx.body = { msg: 'Hello world!' };
+const welcomeAPI = async (ctx: RouterContext, next: any) => {
+ ctx.body = {
+ message: "Welcome to the blog API!"
+ };
  await next();
-})
-app.use(json());
+}
+import {router as articles} from "./routes/articles";
+// Other code statements go here
+app.use(articles.routes());
+router.get('/api/v1', welcomeAPI);
 app.use(logger());
-app.use(router.routes()).use(router.allowedMethods());
-app.listen(10888, () => {
- console.log("Koa Started");
-})
+app.use(json());
+app.use(router.routes());
+app.listen(10888);
