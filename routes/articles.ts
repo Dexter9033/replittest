@@ -41,8 +41,8 @@ const createArticle = async (ctx: RouterContex, next: any) => {
  ctx.body = newArticle;
  await next();
 }
-const updateArticle = async (ctx, next) => {
-  let id = parseInt(ctx.params.id)
+const updateArticle = async (ctx: RouterContext, next: any) => {
+  let id = ctx.params.id
   let {title,fullText} = ctx.request.body;
   let newArticle = {title: title, fullText: fullText};
   if ((id < articles.length+1) && (id > 0)) {
@@ -56,6 +56,11 @@ const updateArticle = async (ctx, next) => {
 
 const deleteArticle = async (ctx: RouterContext, next: any) => {
  //TODO: delete an article
+  let id = ctx.params.id;
+  articles.splice(id-1,1);
+  ctx.body = "203";
+  ctx.status = 203;
+  await next();
 }
 /* Routes are needed to connect path endpoints to handler functions.
  When an Article id needs to be matched we use a pattern to match
