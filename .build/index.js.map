@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../index.ts"],
+  "sourcesContent": ["import Koa from \"koa\";\nimport Router, {RouterContext} from \"koa-router\";\nimport logger from \"koa-logger\";\nimport json from \"koa-json\";\nconst app: Koa = new Koa();\nconst router: Router = new Router();\nrouter.get('/', async (ctx: RouterContext, next: any) => {\n ctx.body = { msg: 'Hello world!' };\n await next();\n})\napp.use(json());\napp.use(logger());\napp.use(router.routes()).use(router.allowedMethods());\napp.listen(10888, () => {\n console.log(\"Koa Started\");\n})"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;AAAA,iBAAgB;AAChB,wBAAoC;AACpC,wBAAmB;AACnB,sBAAiB;AACjB,MAAM,MAAW,IAAI,WAAAA,QAAI;AACzB,MAAM,SAAiB,IAAI,kBAAAC,QAAO;AAClC,OAAO,IAAI,KAAK,OAAO,KAAoB,SAAc;AACxD,MAAI,OAAO,EAAE,KAAK,eAAe;AACjC,QAAM,KAAK;AACZ,CAAC;AACD,IAAI,QAAI,gBAAAC,SAAK,CAAC;AACd,IAAI,QAAI,kBAAAC,SAAO,CAAC;AAChB,IAAI,IAAI,OAAO,OAAO,CAAC,EAAE,IAAI,OAAO,eAAe,CAAC;AACpD,IAAI,OAAO,OAAO,MAAM;AACvB,UAAQ,IAAI,aAAa;AAC1B,CAAC;",
+  "names": ["Koa", "Router", "json", "logger"]
+}
