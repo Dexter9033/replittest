@@ -28,7 +28,7 @@ const getById = async (ctx: RouterContext, next: any) => {
  }
  await next();
 }
-const createArticle = async (ctx: RouterContext, next: any) => {
+const createArticle = async (ctx: RouterContex, next: any) => {
  // The body parser gives us access to the request body on ctx.request.body.
  // Use this to extract the title and fullText we were sent.
  let {title, fullText} = ctx.request.body;
@@ -41,9 +41,19 @@ const createArticle = async (ctx: RouterContext, next: any) => {
  ctx.body = newArticle;
  await next();
 }
-const updateArticle = async (ctx: RouterContext, next: any) => {
- //TODO: edit an article
+const updateArticle = async (ctx, next) => {
+  let id = parseInt(ctx.params.id)
+  let {title,fullText} = ctx.request.body;
+  let newArticle = {title: title, fullText: fullText};
+  if ((id < articles.length+1) && (id > 0)) {
+   articles[id-1] = newArticle;
+  ctx.status = 202;
+ } else {
+   ctx.status = 404;
+ }
+ await next();
 }
+
 const deleteArticle = async (ctx: RouterContext, next: any) => {
  //TODO: delete an article
 }
@@ -54,7 +64,7 @@ const deleteArticle = async (ctx: RouterContext, next: any) => {
 router.get('/', getAll);
 router.post('/', bodyParser(), createArticle);
 router.get('/:id([0-9]{1,})', getById);
-router.put('/:id([0-9]{1,})', updateArticle);
+router.put('/:id([0-9]{1,})', bodyParser(), updateArticle);
 router.del('/:id([0-9]{1,})', deleteArticle);
 // Finally, define the exported object when import from other scripts.
 export { router };
